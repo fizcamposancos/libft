@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rev_int_tab.c                                   :+:      :+:    :+:   */
+/*   ft_strarrlen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fportela <fportela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/07 12:32:15 by fportela          #+#    #+#             */
-/*   Updated: 2021/04/04 00:24:28 by fportela         ###   ########.fr       */
+/*   Created: 2020/07/21 19:22:23 by fportela          #+#    #+#             */
+/*   Updated: 2021/04/03 23:58:47 by fportela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_rev_int_tab(int *tab, int size)
+size_t	ft_strarrlen(char **info)
 {
-	int	*revtab;
-	int	i;
+	size_t	i;
 
-	revtab = (int *)malloc(sizeof(int) * size);
-	if (!revtab)
-		return ;
 	i = 0;
-	while (i < size)
-	{
-		revtab[i] = *(tab + size - 1 - i);
+	while (info[i])
 		i++;
-	}
-	i = 0;
-	while (i < size)
-	{
-		*(tab + i) = revtab[i];
-		i++;
-	}
+	return (i);
 }

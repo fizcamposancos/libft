@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmergesort.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fportela <fportela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 18:27:42 by fportela          #+#    #+#             */
-/*   Updated: 2021/04/03 00:35:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/04 23:36:36 by fportela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ static t_list	*sortedmerge(t_list *a, t_list *b,
 	return (result);
 }
 
-void	ft_lstmergesort(t_list **alist,
-										int (*fcmp)(const void *, const void *))
+void	ft_lstmergesort(t_list **alist, int (*fcmp)(const void *, const void *))
 {
 	t_list	*list;
 	t_list	*a;

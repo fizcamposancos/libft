@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fportela <fportela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:13:48 by fportela          #+#    #+#             */
-/*   Updated: 2021/04/03 00:42:00 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/04 23:40:30 by fportela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
 typedef struct s_list
 {
@@ -34,12 +37,17 @@ char			*ft_itoa(int n);
 void			ft_lstadd_back(t_list **alst, t_list *new);
 void			ft_lstadd_front(t_list **alst, t_list *new);
 void			ft_lstclear(t_list **lst, void (*del)(void *));
+size_t			ft_lstdelcmp(t_list **head, int (*compar)(const void *,
+						const void *), void *match, void (*del)(void *));
 void			ft_lstdelone(t_list *lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstlast(t_list *lst);
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 					void (*del)(void *));
+void			ft_lstmergesort(t_list **alist, int (*fcmp)(const void *,
+						const void *));
 t_list			*ft_lstnew(void *content);
+void			ft_lstrev(t_list **lst);
 int				ft_lstsize(t_list *lst);
 void			*ft_memccpy(void *dest, const void *src, int c, size_t n);
 void			*ft_memchr(const void *s, int c, size_t n);
@@ -63,6 +71,7 @@ int				ft_str_is_lowercase(char *str);
 int				ft_str_is_numeric(char *str);
 int				ft_str_is_printable(char *str);
 int				ft_str_is_uppercase(char *str);
+size_t			ft_strarrlen(char **info);
 char			*ft_strcat(char *dest, const char *src);
 char			*ft_strchr(const char *s, int c);
 int				ft_strcmp(const char *s1, const char *s2);
@@ -86,4 +95,5 @@ char			*ft_substr(char const *s, unsigned int start, size_t len);
 int				ft_tolower(int i);
 int				ft_toupper(int i);
 
+int				get_next_line(int fd, char **line);
 #endif

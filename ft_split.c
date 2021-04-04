@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fportela <fportela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 12:42:29 by fportela          #+#    #+#             */
-/*   Updated: 2021/04/03 01:12:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/04 00:26:14 by fportela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,27 @@ static char	*malloc_word(char *str, char c)
 	return (word);
 }
 
-static char	**free_split(char ***tabstr)
+static int	splitter(char const *s, char c, char **tabstr)
 {
-	int	i;
+	int		i;
 
 	i = 0;
-	while (*tabstr[i])
+	while (*s)
 	{
-		free(*tabstr[i]);
-		i++;
+		while (*s && isinset(*s, c))
+			s++;
+		if (*s && !isinset(*s, c))
+		{
+			tabstr[i] = malloc_word((char *)s, c);
+			if (!tabstr[i])
+				return (1);
+			i++;
+			while (*s && !isinset(*s, c))
+				s++;
+		}
 	}
-	free(*tabstr);
-	return (NULL);
+	tabstr[i] = NULL;
+	return (0);
 }
 
 char	**ft_split(char const *s, char c)
@@ -85,21 +94,14 @@ char	**ft_split(char const *s, char c)
 	tabstr = (char **)malloc(sizeof(char *) * (len + 1));
 	if (!tabstr)
 		return (NULL);
+	if (splitter(s, c, tabstr) == 0)
+		return (tabstr);
 	i = 0;
-	while (*s)
+	while (tabstr[i])
 	{
-		while (*s && isinset(*s, c))
-			s++;
-		if (*s && !isinset(*s, c))
-		{
-			tabstr[i] = malloc_word((char *)s, c);
-			if (!tabstr[i])
-				return (free_split(&tabstr));
-			i++;
-			while (*s && !isinset(*s, c))
-				s++;
-		}
+		free(tabstr[i]);
+		i++;
 	}
-	tabstr[i] = NULL;
-	return (tabstr);
+	free(tabstr);
+	return (NULL);
 }
