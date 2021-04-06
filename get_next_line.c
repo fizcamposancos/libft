@@ -5,75 +5,85 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fportela <fportela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/04 23:10:46 by fportela          #+#    #+#             */
-/*   Updated: 2021/04/04 23:16:07 by fportela         ###   ########.fr       */
+/*   Created: 2019/11/18 16:28:22 by marvin            #+#    #+#             */
+/*   Updated: 2021/04/06 12:05:54 by fportela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	get_line(char **s, char **line)
+static int	ft_nbytes(ssize_t *nbytes, char **getline)
 {
-	int		len;
-	char	*tmp;
-
-	len = 0;
-	while ((*s)[len] != '\n' && (*s)[len] != '\0')
-		len++;
-	if ((*s)[len] == '\n')
+	if (*nbytes < 0)
 	{
-		*line = ft_substr(*s, 0, len);
-		tmp = ft_strdup(&((*s)[len + 1]));
-		free(*s);
-		*s = tmp;
+		if (*getline != NULL)
+		{
+			free(*getline);
+			*getline = NULL;
+		}
+		return (-1);
 	}
-	else
-	{
-		*line = ft_substr(*s, 0, len);
-		free(*s);
-		*s = NULL;
-		return (0);
-	}
-	return (1);
+	return (0);
 }
 
-static int	checkline(char **s, char **line, int fd_read)
+static int	ft_line_strdup(char **line)
 {
-	if (fd_read < 0)
+	*line = ft_strdup("");
+	return (0);
+}
+
+static int	ft_gnl_n(ssize_t ret, char **getline, char **line)
+{
+	char		*tmp;
+	char		*tmp2;
+
+	if (ft_nbytes(&ret, getline))
 		return (-1);
-	else if ((fd_read == 0 && *s == NULL) || *s[0] == '\0')
+	if (!ret && !*getline)
+		return (ft_line_strdup(line));
+	tmp = ft_strchr(*getline, '\n');
+	if (tmp)
 	{
-		*line = ft_strdup("");
-		return (0);
+		*tmp = '\0';
+		*line = ft_strdup(*getline);
+		tmp2 = ft_strdup(tmp + 1);
+		free(*getline);
+		*getline = tmp2;
+		return (1);
 	}
-	else
-		return (get_line(s, line));
+	if (ft_strchr(*getline, '\0'))
+	{
+		*line = ft_strdup(*getline);
+		free(*getline);
+		*getline = NULL;
+	}
+	return (0);
 }
 
 int	get_next_line(int fd, char **line)
 {
-	int			fd_read;
-	static char	*s;
-	char		buff[BUFFER_SIZE + 1];
-	char		*tmp;
+	ssize_t		ret;
+	static char	*getline[4096];
+	char		*buffer;
 
-	if (fd < 0 || !line || !BUFFER_SIZE)
+	ret = 0;
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (fd < 0 || line == NULL || BUFFER_SIZE <= 0
+		|| !buffer)
 		return (-1);
-	fd_read = read(fd, buff, BUFFER_SIZE);
-	while (fd_read > 0)
+	ret = read(fd, buffer, BUFFER_SIZE);
+	while (ret > 0)
 	{
-		buff[fd_read] = '\0';
-		if (s == NULL)
-			s = ft_strdup(buff);
+		buffer[ret] = '\0';
+		if (!getline[fd])
+			getline[fd] = ft_strdup(buffer);
 		else
-		{
-			tmp = ft_strjoin(s, buff);
-			free(s);
-			s = tmp;
-		}
-		if (ft_strchr(s, '\n'))
+			getline[fd] = ft_strjoin(getline[fd], buffer);
+		if (ft_strchr(buffer, '\n'))
 			break ;
-		fd_read = read(fd, buff, BUFFER_SIZE);
+		ret = read(fd, buffer, BUFFER_SIZE);
 	}
-	return (checkline(&s, line, fd_read));
+	free(buffer);
+	buffer = NULL;
+	return (ft_gnl_n(ret, &getline[fd], &*line));
 }

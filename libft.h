@@ -6,7 +6,7 @@
 /*   By: fportela <fportela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:13:48 by fportela          #+#    #+#             */
-/*   Updated: 2021/04/04 23:40:30 by fportela         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:42:25 by fportela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
+# include <stdio.h>
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif
@@ -24,6 +26,13 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }				t_list;
+
+enum	e_strjoin_free
+{
+	FREE_FIRST,
+	FREE_SECOND,
+	FREE_BOTH
+};
 
 int				ft_atoi(const char *str);
 void			ft_bzero(void *s, size_t n);
@@ -78,6 +87,7 @@ int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strcpy(char *dest, const char *src);
 char			*ft_strdup(const char *src);
 char			*ft_strjoin(char const *s1, char const *s2);
+char			*ft_strjoin_free(char *s1, char *s2, size_t flag);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);
 size_t			ft_strlcpy(char *dest, const char *src, size_t size);
 size_t			ft_strlen(const char *str);
@@ -96,4 +106,5 @@ int				ft_tolower(int i);
 int				ft_toupper(int i);
 
 int				get_next_line(int fd, char **line);
+
 #endif

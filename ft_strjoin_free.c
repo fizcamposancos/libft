@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rev_int_tab.c                                   :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fportela <fportela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/07 12:32:15 by fportela          #+#    #+#             */
-/*   Updated: 2021/04/05 00:16:24 by fportela         ###   ########.fr       */
+/*   Created: 2020/07/01 20:01:20 by gbudau            #+#    #+#             */
+/*   Updated: 2021/04/05 23:42:38 by fportela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_rev_int_tab(int *tab, int size)
-{
-	int	*revtab;
-	int	i;
+/*
+** Join s1 and s2 and return the new string
+** Free the strings based on a flag
+*/
 
-	revtab = (int *)malloc(sizeof(int) * size);
-	if (!revtab)
-		return ;
-	i = 0;
-	while (i < size)
+char	*ft_strjoin_free(char *s1, char *s2, size_t flag)
+{
+	char	*ret;
+
+	ret = ft_strjoin(s1, s2);
+	if (flag == FREE_FIRST)
+		free(s1);
+	else if (flag == FREE_SECOND)
+		free(s2);
+	else if (flag == FREE_BOTH)
 	{
-		revtab[i] = *(tab + size - 1 - i);
-		i++;
+		free(s1);
+		free(s2);
 	}
-	i = 0;
-	while (i < size)
-	{
-		*(tab + i) = revtab[i];
-		i++;
-	}
+	return (ret);
 }
