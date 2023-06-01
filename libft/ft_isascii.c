@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportela <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fportela <fportela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 10:29:49 by fportela          #+#    #+#             */
 /*   Updated: 2019/10/08 11:08:37 by fportela         ###   ########.fr       */

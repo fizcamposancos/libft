@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_is_printable.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportela <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fportela <fportela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 11:10:38 by fportela          #+#    #+#             */
 /*   Updated: 2019/10/08 11:49:37 by fportela         ###   ########.fr       */
